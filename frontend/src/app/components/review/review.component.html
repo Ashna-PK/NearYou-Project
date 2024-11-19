@@ -1,0 +1,57 @@
+
+<app-header></app-header>
+<div class="mt-5">
+  <h2 class="text-center">Review Management</h2>
+  <div *ngIf="role === 'admin'">
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Product ID</th>
+            <th>Shop ID</th>
+            <th>User ID</th>
+            <th>Date & Time</th>
+            <th>Message</th>
+            <th>Rating</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let review of reviews">
+            <td>{{ review.productId }}</td>
+            <td>{{ review.shopid }}</td>
+            <td>{{ review.userid }}</td>
+            <td>{{ review.dateTime }}</td>
+            <td>{{ review.message }}</td>
+            <td>{{ review.userRating }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="role === 'seller'">
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Product ID</th>
+            <th>User ID</th>
+            <th>Date & Time</th>
+            <th>Message</th>
+            <th>Rating</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let review of reviews">
+            <td>{{ review.productId }}</td>
+            <td>{{ review.userid }}</td>
+            <td>{{ review.dateTime }}</td>
+            <td>{{ review.message }}</td>
+            <td>{{ review.userRating }}</td>
+          </tr>
+          <p *ngIf="!reviews?.length">No reviews to display</p>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

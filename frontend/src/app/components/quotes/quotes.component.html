@@ -1,0 +1,11 @@
+<div class="quote-container">
+    <ng-container *ngIf="loading;  quoteContent">
+        <p class="loading-text">Loading quote...</p> <!-- Add a styled loading text -->
+      </ng-container>
+    <blockquote class="quote-content">"{{ quoteContent }}"
+        <span class="typed-text" id="typedQuote"></span>
+    </blockquote>
+    <p class="quote-author">
+        <span class="typed-text" id="typedAuthor">- {{ quoteAuthor }}</span>
+    </p>
+</div>

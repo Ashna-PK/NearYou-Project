@@ -1,0 +1,29 @@
+<app-header></app-header>
+<div class="container mt-5">
+  <div class="row">
+    <!-- Iterate over bakeries using *ngFor in Angular -->
+    <div *ngFor="let shop of bakeries; let i = index" class="col-md-4 mb-4">
+      <div class="card">
+        <!-- <img class="card-img-top" [src]="shop.imageUrl" alt="Product image" /> -->
+        <div class="card-body">
+          <h5 class="card-title text-dark"> {{ shop.name }}</h5>
+          <p class="card-text text-muted">Rating: {{ shop.rating }} ★</p>
+          <p class="card-text">{{ shop.description }}</p>
+          <p class="card-text">{{ shop.isOpen ?'Shop is open':'Shop is closed'}}</p>
+          <p class="card-text">Open Time: {{ shop.openTime }}</p>
+          <p class="card-text">Close Time: {{ shop.closeTime }}</p>
+        </div>
+
+        <div class="card-footer text-center">
+          <!-- Button to navigate to product list of the shop -->
+          <button (click)="goToProducts(shop.id)">Explore</button>
+          
+          <!-- Anchor tag to get directions -->
+          <a href="#" (click)="getDirections(shop)">
+            <img src="geo-alt-fill.svg" alt="Get Directions" style="width: 24px; height: 24px;">
+          </a>          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

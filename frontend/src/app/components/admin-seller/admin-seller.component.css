@@ -1,0 +1,124 @@
+/* General container styling */
+.container {
+  margin-top: 50px;
+  padding: 20px;
+  max-width: 90%;
+  margin: auto;
+}
+
+/* Header styles */
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 1.8rem;
+  color: #333;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* Table styles */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Table header styles */
+.table th {
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px;
+  text-align: left;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* Table row and cell styles */
+.table td, 
+.table th {
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Styling for Time Column */
+.time-column {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.time-item {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Rating input field styling */
+input[type="number"] {
+  width: 60px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Button styles */
+.btn {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-right: 10px; /* Add space between buttons */
+}
+
+/* Verify button */
+.btn-verify {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.btn-verify:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+/* Delete button */
+.btn-delete {
+  margin-top: 2px;
+  padding-top: 10px;
+  background-color: #e74c3c;
+  color: white;
+}
+
+.btn-delete:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .table {
+    font-size: 0.9rem;
+  }
+
+  .table th,
+  .table td {
+    padding: 10px;
+  }
+
+  .btn {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+}

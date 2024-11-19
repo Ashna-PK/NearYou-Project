@@ -1,0 +1,86 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.quote-container {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ddd;;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    width: 100%;
+    overflow-wrap: break-word; /* Break long words to fit within the container */
+  word-wrap: break-word;
+  word-break: break-word; /* Handle long unbroken text */
+  hyphens: auto; 
+}
+
+.quote-content {
+    font-size: 1.2rem;
+    font-weight:lighter;
+    margin: 0;
+    text-align: center;
+}
+
+.quote-author {
+    font-size: 1rem;
+    margin-top: 10px;
+    color: #555;
+}
+
+.typed-text {
+    display: inline-block;
+    border-right: 2px solid #333;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#typedQuote {
+    font-size: 1.2rem;
+    animation: typing 3s steps(40, end), blink 0.5s step-end infinite;
+}
+
+#typedAuthor {
+    font-size: 1rem;
+    animation: typing 2s steps(30, end) 3s forwards, blink 0.5s step-end infinite 5s;
+}
+.loading-text {
+    font-size: 1.5rem;
+    color: #888;
+    animation: fadeInOut 1.5s infinite;
+  }
+  
+  @keyframes fadeInOut {
+    0%, 100% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blink {
+    from, to {
+        border-color: transparent;
+    }
+    50% {
+        border-color: black;
+    }
+}
