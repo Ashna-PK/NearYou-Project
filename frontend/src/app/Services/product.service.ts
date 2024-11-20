@@ -7,16 +7,16 @@ import { Observable } from 'rxjs';
 })
 export class ProductService {
   constructor(private http: HttpClient) {}
-  private baseUrl = 'https://localhost:7003/api/Product';
+  private baseUrl = 'https://localhost:7000/gateway/product';
   getProductByShop(shopId: any): Observable<any> {
-    return this.http.get<any[]>(this.baseUrl + '/shop?shopId=' + shopId);
+    return this.http.get<any[]>(this.baseUrl + '/shop/' + shopId);
   }
   putShopQuantity(id: Number, selectedQuantity: any) {
     return this.http.put(`${this.baseUrl}/${id}/${selectedQuantity}`, {});
   }
-  postShop(selectedProduct: any): Observable<any> {
+  postProduct(selectedProduct: any): Observable<any> {
     return this.http.post(
-      `${this.baseUrl}?sellerId=${selectedProduct.shopId}`,
+      `${this.baseUrl}/${selectedProduct.shopId}`,
       selectedProduct
     );
   }

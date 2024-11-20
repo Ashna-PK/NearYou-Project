@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ReviewService {
-  private baseUrl='https://localhost:7003/api/Review'
+  private baseUrl='https://localhost:7000/gateway/review'
   constructor(private http:HttpClient) { 
  
   }
@@ -20,6 +20,6 @@ export class ReviewService {
   }
   getReviewByShop(shopId:any):Observable<any>
   {
-    return this.http.get(`${this.baseUrl}/shop?shopId=${shopId}`);
+    return this.http.get(`${this.baseUrl}/shop/${shopId}`);
   }
 }

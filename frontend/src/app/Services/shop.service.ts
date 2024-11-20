@@ -8,12 +8,12 @@ import { Observable } from 'rxjs';
 export class ShopService {
 
   constructor(private http: HttpClient) { }
-  private baseUrl = 'https://localhost:7003/api/shop';
+  private baseUrl = 'https://localhost:7000/gateway/shop';
   getShops():Observable<any>{
     return this.http.get(this.baseUrl);
   }
   verifySeller(id:number,rating:number){
-    return this.http.put(`${this.baseUrl}/admin/verify?id=${id}&verify=${true}&rating=${rating}`,{})
+    return this.http.put(`${this.baseUrl}/admin/verify/${id}/${rating}`,{})
   }
   getShopId(username:string|null):Observable<any>{
     return this.http.get(this.baseUrl+'/id/'+username)
@@ -29,5 +29,8 @@ export class ShopService {
   }
   putShop(shopId:number,shopDetails:any):Observable<any>{
     return  this.http.put(`${this.baseUrl}/${shopId}`, shopDetails)
+  }
+  getShopById(shopId:any){
+    return this.http.get(`${this.baseUrl}/${shopId}`)
   }
 }

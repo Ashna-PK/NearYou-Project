@@ -6,6 +6,7 @@ import { delay } from 'rxjs';
 import { UserService } from '../../Services/user.service';
 import { AuthService } from '../../Services/auth.service';
 import { ShopService } from '../../Services/shop.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -17,7 +18,8 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private userService: UserService,
-    private shopService: ShopService
+    private shopService: ShopService,
+    private toastr:ToastrService
   ) {}
   registerObj: any = {
     name: '',
@@ -34,7 +36,7 @@ export class LoginComponent {
   };
 
   loginObj: any = {
-    email: 'seller9@gmail.com',
+    email: 's1@gmail.com',
     password: 'Ashna@123',
   };
   confirmPass = '';
@@ -69,7 +71,7 @@ export class LoginComponent {
               .subscribe((user: any) => {
                 console.log(user);
                 if (user) {
-                  alert('User Successfully registered');
+                  this.toastr.success('User Successfully registered');
                 }
               });
           } else if (this.registerObj.role == 'seller') {
@@ -78,31 +80,37 @@ export class LoginComponent {
               .subscribe((user: any) => {
                 console.log(user);
                 if (user) {
-                  alert('Seller Successfully registered');
+                  this.toastr.success('Seller Successfully registered');
                 }
               });
           }
           //delay(1000);
           window.location.reload();
         } else {
-          alert('Something went wrong');
+          this.toastr.error('Something went wrong');
         }
       });
     } else {
-      alert('your password and confirm password doesnt match');
+      this.toastr.warning('your password and confirm password doesnt match');
     }
   }
   onLogin() {
     localStorage.clear();
     this.authService.login(this.loginObj).subscribe((res: any) => {
+      
       if (res.role == 'user') {
+        this.toastr.success('User Successfully logged in');
         this.userService
           .getUserId(res.email) //service
           .subscribe((userid: any) => {
             localStorage.setItem('userId', userid);
+
           });
+          this.router.navigateByUrl('home');
       } else if (res.role == 'seller') {
+        this.toastr.success('Seller Successfully logged in');
         console.log(res);
+        // this.http.get('https://localhost:7003/api/shop/id/'+res.email)
         this.shopService
           .getShopId(res.email) //service
           .subscribe((sellerid: any) => {
@@ -111,14 +119,21 @@ export class LoginComponent {
             localStorage.setItem('shopName', sellerid.shopName);
             console.log(localStorage.getItem('sellerId'));
           });
+          this.router.navigateByUrl('home');
+      }
+      else if(res.role =="admin"){
+        this.router.navigateByUrl('home');
+        this.toastr.success("admin successfully logged in");
+      }
+      else if (res.role==null){
+        this.router.navigateByUrl('login');
+        this.toastr.error("check the credentials");
       }
 
       localStorage.setItem('email', res.email);
       localStorage.setItem('role', res.role);
       const roleget = localStorage.getItem('role');
       console.log(res);
-
-      const shopname = localStorage.getItem('shopName');
 
       // if (res) {
       //   if (res.role == 'user') {
@@ -132,7 +147,8 @@ export class LoginComponent {
       //       this.router.navigate(['seller/home']);
       //   }
       // }
-      this.router.navigateByUrl('home');
+     
     });
   }
+
 }

@@ -84,7 +84,7 @@ export class ProductListComponent implements OnInit {
       this.bookingService.postBooking(this.bookingDetails).subscribe({
         next: (res) => {
           this.toastr.success(
-            `Your ${product.selectedQuantity} '${product.name}' has been Booked successfully!`
+            `Your  '${product.name}' has been Booked successfully!`
           );
           console.log(res); // Reset selected quantity
         },
@@ -100,16 +100,15 @@ export class ProductListComponent implements OnInit {
         .putShopQuantity(product.id, product.selectedQuantity)
         .subscribe({
           next: () => {
-            this.toastr.success(
-              `Your ${product.selectedQuantity} '${product.name}' has been Booked successfully!`
+            console.log(
+              `You booked quantity - ${product.selectedQuantity } of product:'${product.name}'  successfully!`
             );
-            product.selectedQuantity = 0; // Reset selected quantity
+    product.selectedQuantity = 0; // Reset selected quantity
+
           },
           error: (err) => {
             console.error('Error booking product:', err);
-            this.toastr.error(
-              'An error occurred while booking the product. Please try again.'
-            );
+            
           },
         });
     } else {
@@ -117,6 +116,7 @@ export class ProductListComponent implements OnInit {
         'Please select at least one quantity to book the product.'
       );
     }
+
   }
 
   getProducts(id: string): void {

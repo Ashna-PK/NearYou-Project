@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class BookingService {
 
   constructor(private http:HttpClient) { }
-    private baseUrl='https://localhost:7004/api/Booking';
+    private baseUrl='https://localhost:7000/gateway/booking';
     getBookingsOfUser(id:any):Observable<any>{
      return this.http.get(`${this.baseUrl}/user/${id}`);
     }

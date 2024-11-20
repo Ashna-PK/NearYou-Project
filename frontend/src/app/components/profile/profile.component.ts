@@ -6,23 +6,30 @@ import { UserService } from '../../Services/user.service';
 import { HeaderComponent } from '../header/header.component';
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { ShopService } from '../../Services/shop.service';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [RouterLink,RouterOutlet,FormsModule,HeaderComponent,CommonModule],
+  imports: [FormsModule,HeaderComponent,CommonModule],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  userid:any 
+  userid:any
+  role:any 
   ProfileName:any 
   ngOnInit(): void {
+    this.role=localStorage.getItem('role')
+    if(this.role==='user')
     this.userid = localStorage.getItem('userId')
+    else if(this.role==='seller')
+    this.userid = localStorage.getItem("sellerId")
     this.getDetails(this.userid)
     console.log(this.userid)
   }
-  constructor(private userService:UserService,private toastr:ToastrService){} //private toastr:ToastrService
+  constructor(private userService:UserService,
+    private toastr:ToastrService,private shopService:ShopService){} //private toastr:ToastrService
   
   UserObj: any = {
     name: "",
@@ -34,17 +41,27 @@ export class ProfileComponent implements OnInit {
   http = inject(HttpClient)
 
   getDetails(id: string) {
-    this.http.get("https://localhost:7002/api/UserClasses/"+id).subscribe((res:any)=>{
+    if(this.role=='user')
+    {this.userService.getUserById(id).subscribe((res: any) => {
       console.log(res)
       if(res){
         this.UserObj=res
         console.log(this.UserObj)
       }
-    })
-    this.userService.getUserById(id).subscribe((res: any) => {
-     
       
     })
+  }
+  else if(this.role=='seller')
+  {
+    this.shopService.getShopById(id).subscribe((res: any) => {
+      console.log(res)
+      if(res){
+        this.UserObj=res
+        console.log(this.UserObj)
+      }
+      
+    })
+  }
   }
   cancelProfileEdit(){this.isEditingProfile=false}
   enableProfileEdit(){this.isEditingProfile=true}

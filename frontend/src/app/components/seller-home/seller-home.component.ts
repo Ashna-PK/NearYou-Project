@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { delay } from 'rxjs';
 import { ProductService } from '../../Services/product.service';
 import { HeaderComponent } from '../header/header.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-seller-home',
@@ -18,7 +19,8 @@ export class SellerHomeComponent implements OnInit {
   selectedProduct: any = null;
   isAddMode: boolean = false;
 
-  constructor(private productService: ProductService ) {
+  constructor(private productService: ProductService,
+    private toastr:ToastrService ) {
     // this.shopID =Number(localStorage.getItem('sellerId'));
     // console.log(this.shopID)
   }
@@ -54,21 +56,21 @@ export class SellerHomeComponent implements OnInit {
   }
   saveProduct() {
     if (!this.selectedProduct) {
-      alert('No product data to save.');
+      this.toastr.warning('No product data to save.');
       return;
     }
     if (this.isAddMode) {
       console.log(this.selectedProduct);
-      this.productService.postShop(this.selectedProduct.shopId)
+      this.productService.postProduct(this.selectedProduct)
         .subscribe({
           next: (res) => {
-            alert('product added succesfuly');
+            this.toastr.success('product added succesfuly');
             this.products.push(res);
             console.log(res);
           },
           error: (err) => {
             console.error('Error adding product:', err);
-            alert(
+            this.toastr.error(
               'An error occurred while adding the product. Please try again.'
             );
           },
@@ -78,7 +80,7 @@ export class SellerHomeComponent implements OnInit {
       const index = Number(this.selectedProduct.id);
       console.log(this.selectedProduct);
       if (!index) {
-        alert('Invalid product ID.');
+        console.log('Invalid product ID.');
         return;
       }
       console.log(this.selectedProduct.name);
@@ -87,14 +89,14 @@ export class SellerHomeComponent implements OnInit {
           next: (res) => {
             console.log(this.selectedProduct);
             this.getProductsByShop();
-            alert(
-              `Your product '${this.selectedProduct}' was updated successfully!`
+            this.toastr.success(
+              `Your product  was updated successfully!`
             );
             this.selectedProduct = null;
           },
           error: (err) => {
             console.error('Error updating product:', err);
-            alert(
+            this.toastr.error(
               'An error occurred while updating the product. Please try again.'
             );
           },
@@ -104,20 +106,20 @@ export class SellerHomeComponent implements OnInit {
   }
   deleteProduct(index: number) {
     const productToDelete = this.products[index];
-    alert(`the product : ${productToDelete.name} will be deleted !`);
+    this.toastr.warning(`the product : ${productToDelete.name} will be deleted !`);
     this.productService.deleteProduct(productToDelete.id)
       .subscribe({
         next: () => {
           this.products.splice(index, 1);
           this.getProductsByShop();
           delay(1000);
-          alert(
+          this.toastr.success(
             `Your product '${productToDelete.name}' was deleted successfully!`
           );
         },
         error: (err) => {
           console.error('Error deleting product:', err);
-          alert(
+          this.toastr.error(
             'An error occurred while deleting the product. Please try again.'
           );
         },

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { BookingService } from '../../Services/booking.service';
 import { HeaderComponent } from '../header/header.component';
 import { ReviewService } from '../../Services/review.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-your-orders',
@@ -31,7 +32,8 @@ export class YourOrdersComponent {
 
   constructor(
     private bookingService: BookingService,
-    private reviewService: ReviewService
+    private reviewService: ReviewService,
+    private toastr:ToastrService
   ) {
     this.loadOrders();
   }
@@ -43,12 +45,12 @@ export class YourOrdersComponent {
         .subscribe({
           next: (res) => {
             this.orders = res;
-            alert('orders retrieved succesfuly');
+            console.log('orders retrieved succesfuly');
             console.log(res);
           },
           error: (err) => {
             console.error('Error loading orders', err);
-            alert(
+            this.toastr.error(
               'An error occurred while loading the orders. Please try again.'
             );
           },
@@ -59,12 +61,12 @@ export class YourOrdersComponent {
         .subscribe({
           next: (res) => {
             this.orders = res;
-            alert('orders retrieved succesfuly');
+           console.log('orders retrieved succesfuly');
             console.log(res);
           },
           error: (err) => {
             console.error('Error loading orders', err);
-            alert(
+            console.log(
               'An error occurred while loading the orders. Please try again.'
             );
           },
@@ -87,11 +89,11 @@ export class YourOrdersComponent {
 
   submitReview() {
     if (this.reviewText.trim() === '') {
-      alert('Review text cannot be empty.');
+      this.toastr.warning('Review text cannot be empty.');
       return;
     }
     if (!this.rating) {
-      alert('Please select a rating.');
+      this.toastr.warning('Please select a rating.');
       return;
     }
     this.reviewdetails.bookingId = 0;
@@ -103,12 +105,12 @@ export class YourOrdersComponent {
     this.reviewdetails.userRating = this.rating;
     this.reviewService.postReview(this.reviewdetails).subscribe({
       next: (res) => {
-        alert('review added succesfuly');
+        this.toastr.success('review added succesfuly');
         console.log(res);
       },
       error: (err) => {
         console.error('Error addding review', err);
-        alert('An error occurred while loading the orders. Please try again.');
+        this.toastr.error('An error occurred while loading the orders. Please try again.');
       },
     });
     console.log(

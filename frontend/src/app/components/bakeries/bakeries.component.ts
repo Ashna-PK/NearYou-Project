@@ -43,6 +43,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ShopService } from '../../Services/shop.service';
 import { HeaderComponent } from '../header/header.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-bakeries',
@@ -62,7 +63,10 @@ export class BakeriesComponent implements OnInit {
     this.getUserLocation(); // Get user location when the component initializes
   }
 
-  constructor(private router: Router, private shopService: ShopService) {}
+  constructor(private router: Router,
+     private shopService: ShopService,
+     private toastr: ToastrService,
+     ) {}
 
   goToProducts(sellerId: number) {
     this.router.navigate([`/product_list/${sellerId}`]);
@@ -99,10 +103,10 @@ export class BakeriesComponent implements OnInit {
   // Function to get the directions URL
   getDirections(shop: any) {
     if (!this.userLocation) {
-      alert('Unable to get your location. Please enable location services.');
+     this.toastr.error('Unable to get your location. Please enable location services.');
       return;
     }
-
+    
     const origin = `${this.userLocation.latitude},${this.userLocation.longitude}`;
     const destination = `${shop.latitude},${shop.longitude}`;
     const directionsUrl = `https://www.google.com/maps/dir/${origin}/${destination}`;

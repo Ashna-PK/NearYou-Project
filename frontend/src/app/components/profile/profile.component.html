@@ -14,7 +14,8 @@
     </div>
     <div class="detail">
       <label>Phone:</label>
-      <span>{{ UserObj.phoneNo }}</span>
+      <span  *ngIf="role=='user'">{{ UserObj.phoneNo }}</span>
+      <span  *ngIf="role=='seller'">{{ UserObj.phoneNumber}}</span>
     </div>
     <div class="detail">
       <label>Address:</label>
@@ -24,7 +25,7 @@
   </div>
 
   <!-- Edit Profile Form -->
-  <form *ngIf="isEditingProfile" (ngSubmit)="onProfileSubmit()">
+  <!-- <form *ngIf="isEditingProfile" (ngSubmit)="onProfileSubmit()">
     <div class="row mt-2">
       <div class="col-md-6">
           <label class="labels">Name</label>
@@ -34,8 +35,10 @@
   <div class="row mt-3">
       <div class="col-md-12">
           <label class="labels">Mobile Number</label>
-          <input disabled="true" [(ngModel)]="UserObj.phoneNo"  name="phone" type="text" class="form-control" placeholder="enter phone number" value="">
-      </div>
+          <input disabled="true" *ngIf="role=='user'" [(ngModel)]="UserObj.phoneNo"  name="phone" type="text" class="form-control" placeholder="enter phone number" value="">
+          <input disabled="true" *ngIf="role=='seller'" [(ngModel)]="UserObj.phoneNumber"  name="phone1" type="text" class="form-control" placeholder="enter phone number" value="">
+
+        </div>
       <div class="col-md-12">
           <label class="labels">Address</label>
           <input [(ngModel)]="UserObj.address" type="text"  name="address" class="form-control" placeholder="enter address " value="">
@@ -49,5 +52,93 @@
       <button type="submit" class="save-profile">Save</button>
       <button type="button" class="cancel-profile" (click)="cancelProfileEdit()">Cancel</button>
     </div>
-  </form>
+  </form> -->
+  <form 
+  *ngIf="isEditingProfile" 
+  (ngSubmit)="onProfileSubmit()" 
+  class="container p-4 shadow rounded bg-light"
+>
+  <h3 class="text-center text-primary mb-4">Edit Profile</h3>
+  
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <label class="form-label">Name</label>
+      <input 
+        [(ngModel)]="UserObj.name" 
+        type="text" 
+        name="name" 
+        class="form-control" 
+        placeholder="Enter your name"
+      />
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <label class="form-label">Mobile Number</label>
+      <input 
+        disabled 
+        *ngIf="role == 'user'" 
+        [(ngModel)]="UserObj.phoneNo" 
+        name="phone" 
+        type="text" 
+        class="form-control" 
+        placeholder="Your phone number"
+      />
+      <input 
+        disabled 
+        *ngIf="role == 'seller'" 
+        [(ngModel)]="UserObj.phoneNumber" 
+        name="phone1" 
+        type="text" 
+        class="form-control" 
+        placeholder="Your phone number"
+      />
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <label class="form-label">Address</label>
+      <input 
+        [(ngModel)]="UserObj.address" 
+        type="text" 
+        name="address" 
+        class="form-control" 
+        placeholder="Enter your address"
+      />
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-12">
+      <label class="form-label">Email ID</label>
+      <input 
+        disabled 
+        [(ngModel)]="UserObj.email" 
+        name="email" 
+        type="text" 
+        class="form-control" 
+        placeholder="Your email ID"
+      />
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end">
+    <button 
+      type="submit" 
+      class="btn btn-primary me-2 save-profile"
+    >
+      Save
+    </button>
+    <button 
+      type="button" 
+      class="btn btn-secondary cancel-profile" 
+      (click)="cancelProfileEdit()"
+    >
+      Cancel
+    </button>
+  </div>
+</form>
+
 </div>

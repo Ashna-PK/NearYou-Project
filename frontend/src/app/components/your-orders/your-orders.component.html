@@ -3,7 +3,7 @@
   <table class="table">
     <thead>
       <tr>
-        <th *ngIf="role === 'user'">ShopId</th>
+        <!-- <th *ngIf="role === 'user'">ShopId</th> -->
         <th *ngIf="role === 'seller'">UserId</th>
         <th>Product Name</th>
         <th>Ordered Quantity</th>
@@ -15,7 +15,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let order of orders">
-        <td *ngIf="role === 'user'">{{ order.vendorId }}</td>
+        <!-- <td *ngIf="role === 'user'">{{ order.vendorId }}</td> -->
         <td *ngIf="role === 'seller'">{{ order.userid }}</td>
         <td>{{ order.productName }}</td>
         <td>{{ order.quantity }}</td>

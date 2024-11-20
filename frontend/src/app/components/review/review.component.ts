@@ -2,6 +2,7 @@ import { Component ,OnInit} from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
 import { CommonModule } from '@angular/common';
 import { ReviewService } from '../../Services/review.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-review',
   standalone: true,
@@ -13,7 +14,8 @@ export class ReviewComponent implements OnInit{
   reviews:any[]=[];
     role = localStorage.getItem('role')
   
-    constructor(private reviewService:ReviewService) {}
+    constructor(private reviewService:ReviewService,
+      private toastr:ToastrService) {}
   
     ngOnInit(): void {
       const role = Number(localStorage.getItem('role'))
@@ -27,12 +29,12 @@ export class ReviewComponent implements OnInit{
           next: (res) => {
             this.reviews=res.result
             console.log(this.reviews)
-            alert(`review retrieved successfully!`);
+            console.log(`review retrieved successfully!`);
            console.log(res) // Reset selected quantity
           },
           error: (err) => {
             console.error('Error booking product:', err);
-            alert('An error occurred while booking the product. Please try again.');
+            this.toastr.error('An error occurred while getting the review. Please try again.');
           }
         })
     }
@@ -41,12 +43,12 @@ export class ReviewComponent implements OnInit{
         next: (res) => {
           this.reviews=res.result
           console.log(res)
-          alert(`review retrieved successfully!`);
+          console.log(`review retrieved successfully!`);
          console.log(res) // Reset selected quantity
         },
         error: (err) => {
           console.error('Error booking product:', err);
-          alert('An error occurred while booking the product. Please try again.');
+          this.toastr.success('An error occurred getting. Please try again.');
         }
       })
     }
